@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | TaskFlow</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:#202124;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+height:100vh;
+
+}
+
+.login-box{
+
+width:420px;
+
+background:#2d2f34;
+
+padding:40px;
+
+border-radius:20px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.4);
+
+}
+
+h1{
+
+text-align:center;
+
+margin-bottom:30px;
+
+color:white;
+
+}
+
+input{
+
+width:100%;
+
+padding:15px;
+
+margin-bottom:20px;
+
+background:#3d4046;
+
+border:none;
+
+border-radius:10px;
+
+color:white;
+
+font-size:15px;
+
+}
+
+input::placeholder{
+
+color:#bdbdbd;
+
+}
+
+button{
+
+width:100%;
+
+padding:15px;
+
+background:#3b82f6;
+
+border:none;
+
+border-radius:10px;
+
+color:white;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#2563eb;
+
+}
+
+.bottom{
+
+text-align:center;
+
+margin-top:25px;
+
+color:#bdbdbd;
+
+}
+
+.bottom a{
+
+color:#3b82f6;
+
+text-decoration:none;
+
+}
+
+.password-box{
+    position:relative;
+}
+
+.password-box input{
+    width:100%;
+}
+
+.password-box span{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    user-select:none;
+    font-size:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h1>TaskFlow Login</h1>
+
+<input type="email" placeholder="Email">
+
+<div class="password-box">
+
+    <input id="loginPassword" type="password" placeholder="Password">
+
+    <span id="loginIcon"
+          onclick="togglePassword('loginPassword','loginIcon')">
+
+        👁
+
+    </span>
+
+</div>
+
+<a href="dashboard.html">
+
+<button>
+
+Login
+
+</button>
+
+</a>
+
+<div class="bottom">
+
+Don't have an account?
+
+<a href="register.html">Register</a>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

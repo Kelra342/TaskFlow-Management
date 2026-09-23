@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TaskFlow | Tasks</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#202124;
+color:white;
+padding:40px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
+button{
+background:#3b82f6;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:10px;
+cursor:pointer;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:#2d2f34;
+border-radius:15px;
+overflow:hidden;
+}
+
+th{
+background:#18191b;
+padding:18px;
+}
+
+td{
+padding:18px;
+text-align:center;
+border-top:1px solid #3d4046;
+}
+
+.edit{
+background:#22c55e;
+padding:8px 18px;
+border-radius:8px;
+text-decoration:none;
+color:white;
+margin-right:10px;
+}
+
+.delete{
+background:#ef4444;
+padding:8px 18px;
+border-radius:8px;
+text-decoration:none;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>Task Management</h1>
+
+<a href="add-task.html">
+    <button type="button">Add Task</button>
+</a>
+
+</div>
+
+<table>
+
+<tr>
+
+<th>Task</th>
+
+<th>Priority</th>
+
+<th>Deadline</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+<tr>
+
+<td>Programming Project</td>
+
+<td>High</td>
+
+<td>Sept 30</td>
+
+<td>Pending</td>
+
+<td>
+
+<a href="edit-task.html" class="edit">Edit</a>
+
+<a href="delete-task.html" class="delete">Delete</a>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>Database Assignment</td>
+
+<td>Medium</td>
+
+<td>Oct 2</td>
+
+<td>Completed</td>
+
+<td>
+
+<a href="edit-task.html" class="edit">Edit</a>
+
+<a href="delete-task.html" class="delete">Delete</a>
+
+</td>
+
+</tr>
+
+</table>
+
+</body>
+</html>

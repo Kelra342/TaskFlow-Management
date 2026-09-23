@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Task | TaskFlow</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#202124;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+width:600px;
+background:#2d2f34;
+padding:40px;
+border-radius:20px;
+}
+
+h1{
+margin-bottom:30px;
+}
+
+input,
+textarea,
+select{
+width:100%;
+padding:15px;
+margin-top:15px;
+background:#3d4046;
+border:none;
+border-radius:10px;
+color:white;
+}
+
+.buttons{
+display:flex;
+gap:15px;
+margin-top:25px;
+}
+
+button{
+flex:1;
+padding:15px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+.update{
+background:#3b82f6;
+color:white;
+}
+
+.cancel{
+background:#ef4444;
+color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Edit Task</h1>
+
+<input type="text" value="Programming Project">
+
+<textarea>Finish HTML and CSS design.</textarea>
+
+<select>
+<option selected>High</option>
+<option>Medium</option>
+<option>Low</option>
+</select>
+
+<input type="date" value="2026-09-30">
+
+<select>
+<option>Pending</option>
+<option selected>In Progress</option>
+<option>Completed</option>
+</select>
+
+<div class="buttons">
+
+<button class="update">
+Update Task
+</button>
+
+<a href="tasks.html" style="flex:1;">
+<button type="button" class="cancel">
+Cancel
+</button>
+</a>
+
+</div>
+
+</div>
+
+</body>
+</html>
