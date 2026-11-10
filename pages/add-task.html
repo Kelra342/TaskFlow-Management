@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Add Task | TaskFlow</title>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #202124;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 90px 20px 30px;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    background: #2d2f34;
+    padding: 40px;
+    border-radius: 20px;
+}
+
+h1 {
+    margin-bottom: 24px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    background: #3d4046;
+    border: 1px solid #555c65;
+    border-radius: 10px;
+    color: white;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #bfc4cc;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid #6ea6ff;
+}
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px;
+    background: #3b82f6;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+.cancel-btn {
+    background: #454b55;
+}
+
+.cancel-btn:hover {
+    background: #585e69;
+}
+
+/* BACK ARROW */
+
+.back-button {
+    position: fixed;
+    top: 35px;
+    left: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    background: #2d2f34;
+    color: white;
+    border: 1px solid #4b4e54;
+    border-radius: 12px;
+    text-decoration: none;
+
+    transition: 0.2s;
+    z-index: 10;
+}
+
+.back-button:hover {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    transform: translateX(-3px);
+}
+
+.back-button:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+
+    .container {
+        padding: 25px;
+    }
+
+    .back-button {
+        top: 17px;
+        left: 17px;
+    }
+}
+
+</style>
+
+<script src="../js/taskflow-store.js" defer></script>
+<script src="../js/taskflow-pages.js" defer></script>
+
+</head>
+
+<body>
+
+<!-- BACK TO TASK MANAGEMENT -->
+
+<a href="tasks.html"
+   class="back-button"
+   title="Back to Task Management"
+   aria-label="Back to Task Management">
+
+    <svg width="22"
+         height="22"
+         viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2.5"
+         stroke-linecap="round"
+         stroke-linejoin="round">
+
+        <path d="M19 12H5"/>
+        <path d="m12 19-7-7 7-7"/>
+
+    </svg>
+
+</a>
+
+<div class="container">
+
+    <h1>Add New Task</h1>
+
+    <input type="text"
+           placeholder="Task Title"
+           maxlength="120"
+           aria-label="Task Title"
+           required>
+
+    <textarea placeholder="Description"
+              aria-label="Description"></textarea>
+
+    <select aria-label="Priority">
+
+        <option>High</option>
+        <option selected>Medium</option>
+        <option>Low</option>
+
+    </select>
+
+    <input type="date"
+           aria-label="Deadline">
+
+    <select aria-label="Status">
+
+        <option>Pending</option>
+        <option>In Progress</option>
+        <option>Completed</option>
+
+    </select>
+
+    <div class="buttons">
+
+        <button type="button">
+            Save Task
+        </button>
+
+        <a href="tasks.html">
+
+            <button type="button" class="cancel-btn">
+                Cancel
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

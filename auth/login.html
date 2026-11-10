@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | TaskFlow</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #202124;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            background: #2d2f34;
+            padding: 38px;
+            border: 1px solid #41444a;
+            border-radius: 18px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
+
+        .brand {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .brand span {
+            color: #3b82f6;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #bdbdbd;
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #e5e7eb;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #3d4046;
+            border: 1px solid #53565e;
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+        }
+
+        input::placeholder {
+            color: #a6a8ae;
+        }
+
+        .password-box {
+            position: relative;
+        }
+
+        .password-box input {
+            padding-right: 55px;
+        }
+
+        .eye-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+        }
+
+        .login-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #2563eb;
+        }
+
+        .bottom {
+            text-align: center;
+            margin-top: 24px;
+            color: #bdbdbd;
+            font-size: 13px;
+        }
+
+        .bottom a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .bottom a:hover {
+            text-decoration: underline;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            color: #a6a8ae;
+            text-decoration: none;
+            font-size: 12px;
+            margin-top: 22px;
+        }
+
+        .back:hover {
+            color: white;
+        }
+
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h1 class="brand">📋 Task<span>Flow</span></h1>
+
+        <p class="subtitle">
+            Welcome back! Sign in to continue.
+        </p>
+
+        <form id="loginForm">
+
+            <div class="field">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required>
+            </div>
+
+            <div class="field">
+                <label for="loginPassword">Password</label>
+
+                <div class="password-box">
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required>
+
+                    <button
+                        type="button"
+                        class="eye-btn"
+                        id="eyeBtn"
+                        aria-label="Show password">
+                        👁
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+
+        </form>
+
+        <div class="bottom">
+            Don't have an account?
+            <a href="./register.html">Register</a>
+        </div>
+
+        <a href="../Index.html" class="back">
+            ← Back to Homepage
+        </a>
+
+    </div>
+
+    <script>
+        const passwordInput =
+            document.getElementById("loginPassword");
+
+        const eyeBtn =
+            document.getElementById("eyeBtn");
+
+        eyeBtn.addEventListener("click", function () {
+            const hidden = passwordInput.type === "password";
+
+            passwordInput.type = hidden ? "text" : "password";
+            eyeBtn.textContent = hidden ? "🙈" : "👁";
+
+            eyeBtn.setAttribute(
+                "aria-label",
+                hidden ? "Hide password" : "Show password"
+            );
+        });
+
+        document.getElementById("loginForm")
+            .addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                // DEMO ONLY:
+                // Validates form fields using HTML.
+                // Does not authenticate a real account.
+                window.location.href = "../pages/dashboard.html";
+            });
+    </script>
+
+</body>
+</html>

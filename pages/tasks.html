@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>TaskFlow | Tasks</title>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #202124;
+    color: white;
+    padding: 36px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.page-heading {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header h1 {
+    font-size: clamp(22px, 3vw, 30px);
+}
+
+.add-link {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.add-link:hover {
+    background: #2563eb;
+}
+
+.table-scroll {
+    overflow-x: auto;
+    border-radius: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #2d2f34;
+    min-width: 650px;
+}
+
+th {
+    background: #18191b;
+    padding: 18px;
+}
+
+td {
+    padding: 18px;
+    text-align: center;
+    border-top: 1px solid #3d4046;
+}
+
+.edit {
+    background: #22c55e;
+    padding: 8px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    margin-right: 10px;
+}
+
+.delete {
+    background: #ef4444;
+    padding: 8px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    background: #2d2f34;
+    color: white;
+    border: 1px solid #4b4e54;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.back-button:hover {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    transform: translateX(-3px);
+}
+
+.back-button:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 18px;
+    }
+
+    .header {
+        align-items: flex-start;
+    }
+
+    .add-link {
+        padding: 12px 15px;
+    }
+
+    .page-heading {
+        gap: 9px;
+    }
+}
+
+</style>
+
+<script src="../js/taskflow-store.js" defer></script>
+<script src="../js/taskflow-pages.js" defer></script>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <div class="page-heading">
+
+        <a href="dashboard.html"
+           class="back-button"
+           aria-label="Back to Dashboard"
+           title="Back to Dashboard">
+
+            <svg width="22"
+                 height="22"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2.5"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+                <path d="M19 12H5"/>
+                <path d="m12 19-7-7 7-7"/>
+
+            </svg>
+
+        </a>
+
+        <h1>Task Management</h1>
+
+    </div>
+
+    <a href="add-task.html" class="add-link">
+        Add Task
+    </a>
+
+</div>
+
+<div class="table-scroll">
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Task</th>
+                <th>Priority</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            <!-- Tasks are inserted by JavaScript -->
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>

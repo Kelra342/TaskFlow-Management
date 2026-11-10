@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register | TaskFlow</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#202124;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
+}
+
+.container{
+width:450px;
+background:#2d2f34;
+padding:40px;
+border-radius:20px;
+}
+
+h1{
+text-align:center;
+margin-bottom:30px;
+}
+
+input{
+width:100%;
+padding:15px;
+margin-bottom:20px;
+background:#3d4046;
+border:none;
+border-radius:10px;
+color:white;
+}
+
+button{
+width:100%;
+padding:15px;
+background:#3b82f6;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#2563eb;
+}
+
+.bottom{
+text-align:center;
+margin-top:20px;
+color:#bdbdbd;
+}
+
+.bottom a{
+color:#3b82f6;
+text-decoration:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Create Account</h1>
+
+<form action="login.html">
+
+    <input type="text" placeholder="Full Name" required>
+
+    <input type="email" placeholder="Email" required>
+
+    <input type="password" placeholder="Password" required>
+
+    <input type="password" placeholder="Confirm Password" required>
+
+    <button type="submit">Create Account</button>
+
+</form>
+
+<div class="bottom">
+
+Already have an account?
+
+<a href="login.html">Login</a>
+
+</div>
+
+</div>
+
+</body>
+</html>

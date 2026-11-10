@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | TaskFlow</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <script src="../js/taskflow-store.js" defer></script>
+    <script src="../js/dashboard.js" defer></script>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <a class="side-brand" href="../Index.html">
+            📋 Task<span>Flow</span>
+        </a>
+
+        <nav class="side-links">
+
+            <a class="active" href="dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="tasks.html">
+                ✅ My Tasks
+            </a>
+
+            <a href="calendar.html">
+                📅 Calendar
+            </a>
+
+            <a href="reports.html">
+                📊 Reports
+            </a>
+
+            <a href="profile.html">
+                👤 Profile
+            </a>
+
+            <a href="../Index.html">
+                🚪 Logout
+            </a>
+
+        </nav>
+
+        <p class="sidebar-note">
+            Student productivity workspace
+            <br>
+            <small>Local demo • No online accounts</small>
+        </p>
+
+    </aside>
+
+    <!-- MAIN DASHBOARD -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <p class="eyebrow">TASKFLOW / OVERVIEW</p>
+                <h1>Welcome Back 👋</h1>
+
+                <p class="muted" id="todayLabel">
+                    Your study dashboard
+                </p>
+            </div>
+
+            <div class="top-actions">
+
+                <button type="button"
+                        class="bell"
+                        id="notificationButton"
+                        aria-label="Show notifications"
+                        aria-expanded="false"
+                        aria-controls="notificationPanel">
+
+                    🔔
+
+                    <span class="notification-count"
+                          id="notificationCount"
+                          hidden>0</span>
+                </button>
+
+                <button type="button"
+                        class="btn primary"
+                        id="openQuickAdd">
+
+                    ＋ Quick Add Task
+                </button>
+
+            </div>
+        </header>
+
+        <!-- NOTIFICATIONS -->
+        <section class="notification-panel panel"
+                 id="notificationPanel"
+                 hidden>
+
+            <div class="section-head">
+                <h2>Notifications</h2>
+
+                <button type="button"
+                        class="text-button"
+                        id="closeNotifications">
+                    Close
+                </button>
+            </div>
+
+            <div id="notificationItems"></div>
+
+        </section>
+
+        <!-- LIVE STATISTICS -->
+        <section class="stats-grid">
+
+            <article class="stat-card">
+                <span>Total Tasks</span>
+                <strong id="totalTasks">0</strong>
+                <small>All saved tasks</small>
+            </article>
+
+            <article class="stat-card">
+                <span>Pending</span>
+                <strong id="pendingTasks" class="amber">0</strong>
+                <small>Needs attention</small>
+            </article>
+
+            <article class="stat-card">
+                <span>Completed</span>
+                <strong id="completedTasks" class="green">0</strong>
+                <small>Finished tasks</small>
+            </article>
+
+            <article class="stat-card">
+                <span>Overdue</span>
+                <strong id="overdueTasks" class="red">0</strong>
+                <small>Unfinished and past due</small>
+            </article>
+
+        </section>
+
+        <!-- COMPLETION PROGRESS -->
+        <section class="panel progress-panel">
+
+            <div class="section-head">
+
+                <div>
+                    <h2>Completion Progress</h2>
+                    <p class="muted">
+                        Updated whenever your tasks change
+                    </p>
+                </div>
+
+                <strong id="progressLabel">0%</strong>
+
+            </div>
+
+            <div class="progress-track"
+                 id="progressTrack"
+                 role="progressbar"
+                 aria-label="Task completion"
+                 aria-valuemin="0"
+                 aria-valuemax="100"
+                 aria-valuenow="0">
+
+                <div id="progressFill"></div>
+
+            </div>
+
+            <p class="muted" id="progressExplanation">
+                0 of 0 tasks completed
+            </p>
+
+        </section>
+
+        <!-- CHARTS -->
+        <section class="two-column">
+
+            <article class="panel">
+
+                <div class="section-head">
+                    <h2>Weekly Activity</h2>
+                    <span class="muted">Last 7 days</span>
+                </div>
+
+                <div class="weekly-chart"
+                     id="weeklyChart"></div>
+
+                <p class="muted helper">
+                    Tasks completed during the last 7 days.
+                </p>
+
+            </article>
+
+            <article class="panel">
+
+                <div class="section-head">
+                    <h2>Task Completion</h2>
+                    <span class="muted">Live breakdown</span>
+                </div>
+
+                <div class="donut-wrap">
+
+                    <div class="donut" id="donutChart">
+                        <span id="donutPercent">0%</span>
+                    </div>
+
+                    <div class="legend">
+
+                        <p>
+                            <i class="dot done"></i>
+                            Completed
+                            <strong id="donutCompleted">0</strong>
+                        </p>
+
+                        <p>
+                            <i class="dot waiting"></i>
+                            Remaining
+                            <strong id="donutRemaining">0</strong>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- DEADLINES AND OVERDUE TASKS -->
+        <section class="two-column">
+
+            <article class="panel">
+
+                <div class="section-head">
+
+                    <h2>Upcoming Deadlines</h2>
+
+                    <a href="tasks.html" class="inline-link">
+                        All Tasks →
+                    </a>
+
+                </div>
+
+                <div id="upcomingList" class="stack"></div>
+
+            </article>
+
+            <article class="panel">
+
+                <div class="section-head">
+
+                    <h2>Overdue Alerts</h2>
+
+                    <span class="alert-pill" id="overdueBadge">
+                        0 overdue
+                    </span>
+
+                </div>
+
+                <div id="overdueList" class="stack"></div>
+
+            </article>
+
+        </section>
+
+        <!-- SEARCH AND FILTERS -->
+        <section class="panel">
+
+            <div class="section-head">
+
+                <div>
+                    <h2>My Tasks</h2>
+
+                    <p class="muted">
+                        Search, filter, and complete tasks
+                        directly from your dashboard.
+                    </p>
+                </div>
+
+                <a href="tasks.html" class="inline-link">
+                    Open Task Page →
+                </a>
+
+            </div>
+
+            <div class="filters">
+
+                <input type="search"
+                       id="searchTasks"
+                       placeholder="Search tasks...">
+
+                <select id="statusFilter">
+                    <option value="all">All Statuses</option>
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+
+                <select id="priorityFilter">
+                    <option value="all">All Priorities</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+
+            </div>
+
+            <div id="taskList"
+                 class="stack task-list"></div>
+
+        </section>
+
+        <footer class="bottom-note">
+            TaskFlow prototype • Tasks are stored in this browser.
+        </footer>
+
+    </main>
+
+</div>
+
+<!-- QUICK ADD AND EDIT TASK MODAL -->
+<dialog id="addTaskDialog" class="task-dialog">
+
+    <form id="quickTaskForm" class="dialog-content">
+
+        <div class="section-head">
+
+            <h2 id="dialogTitle">Quick Add Task</h2>
+
+            <button type="button"
+                    class="icon-close"
+                    id="closeQuickAdd"
+                    aria-label="Close">
+                ✕
+            </button>
+
+        </div>
+
+        <label for="quickTitle">Task Title</label>
+
+        <input type="text"
+               id="quickTitle"
+               required
+               maxlength="120"
+               placeholder="e.g. Finish database project">
+
+        <label for="quickDescription">Description</label>
+
+        <textarea id="quickDescription"
+                  rows="3"
+                  placeholder="Optional notes"></textarea>
+
+        <div class="form-grid">
+
+            <div>
+                <label for="quickPriority">Priority</label>
+
+                <select id="quickPriority">
+                    <option>High</option>
+                    <option selected>Medium</option>
+                    <option>Low</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="quickDue">Deadline</label>
+
+                <input type="date" id="quickDue">
+            </div>
+
+        </div>
+
+        <div class="dialog-actions">
+
+            <button type="button"
+                    class="btn secondary"
+                    id="cancelQuickAdd">
+                Cancel
+            </button>
+
+            <button type="submit" class="btn primary">
+                Save Task
+            </button>
+
+        </div>
+
+    </form>
+
+</dialog>
+
+</body>
+</html>
