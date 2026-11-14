@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports | TaskFlow</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <style>
+        /* REPORT-SPECIFIC STYLES (shared styles live in dashboard.css) */
+
+        [hidden] {
+            display: none !important;
+        }
+
+        /* Reports uses a teal accent of its own */
+        :root {
+            --blue: #0d9488;
+        }
+
+        .primary:hover {
+            background: #0f766e;
+        }
+
+        .stat-card strong {
+            color: #2dd4bf;
+            overflow-wrap: anywhere;
+        }
+
+        /* PERIOD PICKER */
+
+        .rp-period-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 14px;
+        }
+
+        .rp-field {
+            display: grid;
+            gap: 6px;
+            min-width: 190px;
+        }
+
+        .rp-field label {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .rp-period .muted {
+            margin: 12px 0 0;
+        }
+
+        .rp-error {
+            color: #fbbf24;
+        }
+
+        /* SUMMARY */
+
+        .rp-narrative {
+            font-size: 15px;
+            line-height: 1.75;
+            color: #e8ecf3;
+            margin: 0 0 20px;
+        }
+
+        .rp-kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 16px;
+        }
+
+        .rp-kpis .stat-card {
+            background: var(--panel2);
+        }
+
+        .rp-delta.good { color: #4ade80; }
+        .rp-delta.bad  { color: #fb7185; }
+
+        /* CUMULATIVE CHART */
+
+        .rp-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 12px;
+            color: #d2d8e1;
+            font-size: 12px;
+        }
+
+        .rp-legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rp-key {
+            width: 22px;
+            height: 0;
+            border-top: 3px solid #2dd4bf;
+        }
+
+        .rp-key.due {
+            border-top: 3px dashed #9aa3b2;
+        }
+
+        .rp-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .rp-svg text {
+            fill: #adb5c3;
+            font-size: 11px;
+            font-family: inherit;
+        }
+
+        .rp-svg .grid {
+            stroke: #41444b;
+            stroke-width: 1;
+        }
+
+        .rp-svg .line-due {
+            fill: none;
+            stroke: #9aa3b2;
+            stroke-width: 2.5;
+            stroke-dasharray: 7 5;
+        }
+
+        .rp-svg .line-done {
+            fill: none;
+            stroke: #2dd4bf;
+            stroke-width: 2.5;
+        }
+
+        .rp-svg .pt-due  { fill: #9aa3b2; }
+        .rp-svg .pt-done { fill: #2dd4bf; }
+
+        .rp-chart-note {
+            margin-top: 12px;
+        }
+
+        /* TABLES */
+
+        .rp-table-wrap {
+            overflow-x: auto;
+        }
+
+        .rp-table {
+            width: 100%;
+            min-width: 560px;
+            border-collapse: collapse;
+        }
+
+        .rp-table th {
+            text-align: left;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--muted);
+            padding: 0 12px 10px;
+            white-space: nowrap;
+        }
+
+        .rp-table td {
+            padding: 13px 12px;
+            border-top: 1px solid var(--line);
+            vertical-align: middle;
+        }
+
+        .rp-table .num {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .rp-table .title-cell {
+            overflow-wrap: anywhere;
+            font-weight: 500;
+        }
+
+        .rp-rate {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 140px;
+        }
+
+        .rp-rate .progress-track {
+            height: 8px;
+            flex: 1;
+        }
+
+        .rp-rate span {
+            width: 40px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .rp-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .rp-pill.ontime { background: #2b5248; color: #99f3d5; }
+        .rp-pill.late   { background: #564631; color: #ffdb88; }
+        .rp-pill.missed { background: #59333b; color: #ffb7c1; }
+        .rp-pill.open   { background: #3b414a; color: #d2d8e1; }
+        .rp-pill.done   { background: #1f4a48; color: #99f6e4; }
+
+        /* HIGHLIGHTS */
+
+        .rp-note {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: var(--panel2);
+            padding: 13px 14px;
+            border-radius: 10px;
+            line-height: 1.55;
+        }
+
+        .rp-note .icon {
+            width: 18px;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .rp-note.good .icon { color: #4ade80; }
+        .rp-note.warn .icon { color: #fbbf24; }
+        .rp-note.info .icon { color: #5eead4; }
+
+        /* WEEKDAY BARS */
+
+        .rp-hrow {
+            display: grid;
+            grid-template-columns: 44px 1fr 28px;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            color: #d2d8e1;
+        }
+
+        .rp-hrow.best {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .rp-htrack {
+            height: 12px;
+            background: #3b414a;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .rp-hfill {
+            height: 100%;
+            background: #2dd4bf;
+            border-radius: 6px;
+        }
+
+        .rp-hrow .count {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                color: #000;
+            }
+
+            .sidebar,
+            .no-print {
+                display: none !important;
+            }
+
+            .app-shell {
+                display: block;
+            }
+
+            .panel,
+            .stat-card,
+            .rp-kpis .stat-card,
+            .rp-note {
+                background: #fff;
+                border: 1px solid #bbb;
+                break-inside: avoid;
+                color: #000;
+            }
+
+            .stat-card span,
+            .stat-card small,
+            .muted,
+            .rp-legend,
+            .rp-table th,
+            .rp-narrative,
+            .rp-hrow {
+                color: #333 !important;
+            }
+
+            .rp-svg text {
+                fill: #333;
+            }
+
+            .rp-svg .grid {
+                stroke: #ccc;
+            }
+
+            .rp-svg .line-done,
+            .rp-svg .line-due,
+            .rp-svg circle,
+            .rp-hfill,
+            .rp-pill,
+            .progress-track > div {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+
+    <script src="../js/taskflow-store.js" defer></script>
+    <script src="../js/reports.js" defer></script>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <a class="side-brand" href="../Index.html">
+            📋 Task<span>Flow</span>
+        </a>
+
+        <nav class="side-links">
+
+            <a href="dashboard.html">
+                🏠 Dashboard
+            </a>
+
+            <a href="tasks.html">
+                ✅ My Tasks
+            </a>
+
+            <a href="calendar.html">
+                📅 Calendar
+            </a>
+
+            <a class="active" href="reports.html">
+                📊 Reports
+            </a>
+
+            <a href="profile.html">
+                👤 Profile
+            </a>
+
+            <a href="../Index.html">
+                🚪 Logout
+            </a>
+
+        </nav>
+
+        <p class="sidebar-note">
+            Student productivity workspace
+            <br>
+            <small>Local demo • No online accounts</small>
+        </p>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <p class="eyebrow">TASKFLOW / REPORTS</p>
+                <h1>Performance Report</h1>
+
+                <p class="muted" id="rangeLabel">
+                    Choose a period to review
+                </p>
+            </div>
+
+            <div class="top-actions no-print">
+
+                <button type="button"
+                        class="btn secondary"
+                        id="printReport">
+                    Print
+                </button>
+
+                <button type="button"
+                        class="btn primary"
+                        id="exportCsv">
+                    Export CSV
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- REPORT PERIOD -->
+        <section class="panel rp-period no-print">
+
+            <div class="rp-period-row">
+
+                <div class="rp-field">
+                    <label for="presetSelect">Report period</label>
+
+                    <select id="presetSelect">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="month">This month</option>
+                        <option value="lastmonth">Last month</option>
+                        <option value="all">All time</option>
+                        <option value="custom">Custom range</option>
+                    </select>
+                </div>
+
+                <div class="rp-field" id="fromField" hidden>
+                    <label for="fromDate">From</label>
+                    <input type="date" id="fromDate">
+                </div>
+
+                <div class="rp-field" id="toField" hidden>
+                    <label for="toDate">To</label>
+                    <input type="date" id="toDate">
+                </div>
+
+            </div>
+
+            <p class="muted" id="compareNote"></p>
+            <p class="muted rp-error" id="rangeError" hidden></p>
+
+        </section>
+
+        <!-- SUMMARY -->
+        <section class="panel">
+
+            <div class="section-head">
+
+                <div>
+                    <h2>Report Summary</h2>
+                    <p class="muted" id="generatedOn"></p>
+                </div>
+
+            </div>
+
+            <p class="rp-narrative" id="narrative"></p>
+
+            <div class="rp-kpis">
+
+                <article class="stat-card">
+                    <span>Tasks Created</span>
+                    <strong id="kpiCreated">0</strong>
+                    <small class="rp-delta" id="kpiCreatedDelta"></small>
+                </article>
+
+                <article class="stat-card">
+                    <span>Tasks Completed</span>
+                    <strong id="kpiCompleted">0</strong>
+                    <small class="rp-delta" id="kpiCompletedDelta"></small>
+                </article>
+
+                <article class="stat-card">
+                    <span>On-time Delivery</span>
+                    <strong id="kpiRate">—</strong>
+                    <small class="rp-delta" id="kpiRateDelta"></small>
+                </article>
+
+                <article class="stat-card">
+                    <span>Missed Deadlines</span>
+                    <strong id="kpiMissed">0</strong>
+                    <small class="rp-delta" id="kpiMissedDelta"></small>
+                </article>
+
+                <article class="stat-card">
+                    <span>Avg. Days to Finish</span>
+                    <strong id="kpiAvg">—</strong>
+                    <small class="rp-delta" id="kpiAvgDelta"></small>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- WORKLOAD VS DELIVERY -->
+        <section class="panel">
+
+            <div class="section-head">
+
+                <div>
+                    <h2>Workload vs. Delivery</h2>
+                    <p class="muted">
+                        Running totals across the report period
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="rp-legend">
+                <span>
+                    <i class="rp-key due"></i>
+                    <span id="legendDue">Deadlines</span>
+                </span>
+                <span>
+                    <i class="rp-key"></i>
+                    <span id="legendDone">Completed</span>
+                </span>
+            </div>
+
+            <div id="burnChart"></div>
+
+            <p class="muted rp-chart-note">
+                Dashed line: tasks whose deadline falls in this period, added up day by day.
+                Solid line: tasks completed, added up day by day.
+                When the solid line stays close to the dashed one, you are keeping pace with your deadlines.
+            </p>
+
+        </section>
+
+        <!-- DELIVERY BY PRIORITY -->
+        <section class="panel">
+
+            <div class="section-head">
+
+                <div>
+                    <h2>Delivery by Priority</h2>
+                    <p class="muted">
+                        How tasks with a deadline in this period turned out
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="rp-table-wrap">
+
+                <table class="rp-table">
+
+                    <thead>
+                        <tr>
+                            <th>Priority</th>
+                            <th class="num">Deadlines</th>
+                            <th class="num">On time</th>
+                            <th class="num">Late</th>
+                            <th class="num">Missed</th>
+                            <th>On-time rate</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="priorityRows"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- HIGHLIGHTS AND WEEKDAYS -->
+        <section class="two-column">
+
+            <article class="panel">
+
+                <div class="section-head">
+                    <h2>Highlights</h2>
+                    <span class="muted">Found automatically</span>
+                </div>
+
+                <div id="highlights" class="stack"></div>
+
+            </article>
+
+            <article class="panel">
+
+                <div class="section-head">
+
+                    <div>
+                        <h2>Productive Days</h2>
+                        <p class="muted">Completions by weekday</p>
+                    </div>
+
+                </div>
+
+                <div id="weekdayBars"></div>
+
+            </article>
+
+        </section>
+
+        <!-- TASK RECORD -->
+        <section class="panel">
+
+            <div class="section-head">
+
+                <div>
+                    <h2>Task Record</h2>
+                    <p class="muted" id="ledgerCount">
+                        Tasks due or completed in this period
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="rp-table-wrap">
+
+                <table class="rp-table">
+
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Priority</th>
+                            <th>Deadline</th>
+                            <th>Completed</th>
+                            <th>Result</th>
+                            <th class="num">Days to finish</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="ledgerRows"></tbody>
+
+                </table>
+
+            </div>
+
+            <p class="muted" id="ledgerNote" hidden></p>
+
+        </section>
+
+        <footer class="bottom-note">
+            TaskFlow prototype • Reports are built from tasks stored in this browser.
+        </footer>
+
+    </main>
+
+</div>
+
+</body>
+</html>
